@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Welcome to The Cajuput Spa</title>
+    <title>The Cajuput Spa</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     {{-- font --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,14 +45,14 @@
                 class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
                 <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Our recommendation
                 </h1>
-                <p class="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air
-                    plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken
-                    authentic tumeric truffaut hexagon try-hard chambray.</p>
+                <p class="mb-8 leading-relaxed">Indulge in our exclusive Cajuput Signature Rejuvenation, a harmonious blend of exfoliation and hydration. 
+                    This treatment starts with a gentle body scrub, followed by a nourishing wrap infused with essential oils derived from the Cajuput tree. 
+                    Surrender to the soothing ambiance as our therapists work their magic, leaving your skin revitalized and your senses refreshed.</p>
                 <div class="flex justify-center">
                     <button
-                        class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Button</button>
-                    <button
-                        class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Button</button>
+                        class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Book Here!</button>
+                    <!-- <button 
+                        class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Button</button>-->
                 </div>
             </div>
         </div>
@@ -70,8 +70,8 @@
                         <div class="p-6">
                             <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">PACKAGE</h2>
                             <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Body Treatment</h1>
-                            <p class="leading-relaxed mb-3 text-justify">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Impedit, placeat aut expedita mollitia ex voluptate magni!</p>
+                            <p class="leading-relaxed mb-3 text-justify">Indulge in the ultimate self-care experience with our rejuvenating body treatment services! 
+                                Step into a world of relaxation and wellness as our skilled therapists pamper you with luxurious treatments designed to nourish your body and soothe your senses.</p>
                             <div class="flex items-center flex-wrap ">
                                 <button type="button"
                                     class="text-green-700 flex gap-2 items-center hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
@@ -97,8 +97,8 @@
                         <div class="p-6">
                             <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">PACKAGE</h2>
                             <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Massage</h1>
-                            <p class="leading-relaxed mb-3 text-justify">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Impedit, placeat aut expedita mollitia ex voluptate magni!</p>
+                            <p class="leading-relaxed mb-3 text-justify">Embark on a journey of serenity and rejuvenation with our exceptional massage services. 
+                                Unwind, relax, and let the stresses of the day melt away as our skilled therapists expertly address your unique needs.</p>
                             <div class="flex items-center flex-wrap ">
                                 <button type="button"
                                     class="text-green-700 flex gap-2 items-center hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
@@ -124,8 +124,8 @@
                         <div class="p-6">
                             <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">PACKAGE</h2>
                             <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Hair Treatment</h1>
-                            <p class="leading-relaxed mb-3 text-justify">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Impedit, placeat aut expedita mollitia ex voluptate magni!</p>
+                            <p class="leading-relaxed mb-3 text-justify">Revitalize your locks and unleash the full potential of your hair with our exceptional hair treatment services. 
+                                Step into a world of beauty and self-care where our expert stylists are dedicated to enhancing the health, shine, and overall allure of your hair.</p>
                             <div class="flex items-center flex-wrap ">
                                 <button type="button"
                                     class="text-green-700 flex gap-2 items-center hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
@@ -151,8 +151,8 @@
                         <div class="p-6">
                             <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">PACKAGE</h2>
                             <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Manicure</h1>
-                            <p class="leading-relaxed mb-3 text-justify">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Impedit, placeat aut expedita mollitia ex voluptate magni!</p>
+                            <p class="leading-relaxed mb-3 text-justify">Treat yourself to a moment of luxury and care that extends beyond aesthetics to promote healthier, more radiant hands. 
+                                Our wide selection of high-quality nail colors and products ensures that your manicure is not only visually stunning but also long-lasting.</p>
                             <div class="flex items-center flex-wrap ">
                                 <button type="button"
                                     class="text-green-700 flex gap-2 items-center hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
@@ -182,10 +182,11 @@
             <div class="w-1/3">
                 <div class="bg-white p-5 rounded-lg flex flex-col relative">
                     <span class="text-gray-500">Hair Treatment (3 pax)</span>
-                    <span>“Not as great as the advertise, quite dissappointed with the vibes”</span>
+                    <span>"The Luxurious Scalp Renewal at The Cajuput Spa is a must-try. The scalp massage was so relaxing, and the treatment left my scalp feeling rejuvenated. 
+                        My hair has never looked healthier. A truly pampering experience that I'll be coming back for regularly!"</span>
                     <div class="ml-auto text-gray-500">
-                        <i class="fa-solid fa-thumbs-down"></i>
-                        <span>Not Recommended</span>
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span>Recommended</span>
                     </div>
                     <div class="w-0 h-0 
                                 border-l-[20px] border-l-transparent
@@ -197,7 +198,7 @@
                 <div class="flex items-center gap-2 mt-4 ml-5">
                     <img src="{{asset('img/landing/avatar.png')}}" alt="" class="scale-90">
                     <div class="flex flex-col">
-                        <span class="font-semibold">Mohammed Abdullah</span>
+                        <span class="font-semibold">Ariana Kjelberg</span>
                         <span class="text-sm text-gray-500">27 Oct 2023</span>
                     </div>
                 </div>
@@ -206,7 +207,8 @@
             <div class="w-1/3">
                 <div class="bg-white p-5 rounded-lg flex flex-col relative">
                     <span class="text-gray-500">Massages (1 pax)</span>
-                    <span>““Pretty Amazing Experience, everything provides here are perfect!””</span>
+                    <span>"The massage services at The Cajuput Spa are pure bliss! The therapist's skilled touch and the tranquil ambiance create an unparalleled relaxation experience. 
+                        It's a sanctuary for rejuvenation—I left feeling utterly refreshed. Highly recommended!"</span>
                     <div class="ml-auto text-gray-500">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <span>Recommended</span>
@@ -221,7 +223,7 @@
                 <div class="flex items-center gap-2 mt-4 ml-5">
                     <img src="{{asset('img/landing/avatar.png')}}" alt="" class="scale-90">
                     <div class="flex flex-col">
-                        <span class="font-semibold">Mohammed Abdullah</span>
+                        <span class="font-semibold">Richard Felix</span>
                         <span class="text-sm text-gray-500">27 Oct 2023</span>
                     </div>
                 </div>
@@ -230,7 +232,8 @@
             <div class="w-1/3">
                 <div class="bg-white p-5 rounded-lg flex flex-col relative">
                     <span class="text-gray-500">Body Treatment (3 pax)</span>
-                    <span>“All of the workers are super talented, i think this is the best spa in the world!”</span>
+                    <span>"The body treatment services are a true escape to serenity. The tailored approach and luxurious ambiance elevate the experience. 
+                        From soothing wraps to invigorating scrubs, each session is a journey to relaxation and radiant well-being. A must-try for anyone seeking ultimate pampering!"</span>
                     <div class="ml-auto text-gray-500">
                         <i class="fa-solid fa-thumbs-up"></i>
                         <span>Recommended</span>
@@ -245,7 +248,7 @@
                 <div class="flex items-center gap-2 mt-4 ml-5">
                     <img src="{{asset('img/landing/avatar.png')}}" alt="" class="scale-90">
                     <div class="flex flex-col">
-                        <span class="font-semibold">Mohammed Abdullah</span>
+                        <span class="font-semibold">Mayrika Diva</span>
                         <span class="text-sm text-gray-500">20 Oct 2023</span>
                     </div>
                 </div>
@@ -255,7 +258,7 @@
 
     {{-- motto --}}
     <section>
-        <h2 class="text-3xl font-semibold text-center my-10">Indulge, Relax, Rejuvenate.</h2>
+        <h2 class="text-3xl font-semibold text-center my-10">Indulge, Relax & Rejuvenate.</h2>
         <p class="text-center px-28">At our spa, we believe in the transformative power of relaxation and self-care. Our
             dedicated team of professionals is here to provide you with a blissful escape from the everyday hustle and
             bustle.</p>
