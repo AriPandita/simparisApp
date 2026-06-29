@@ -10,7 +10,7 @@ class Recommendation extends Component
     public function render()
     {
         $dataPack = DB::table('serviceS')
-        ->join('image_services', 'services.id', '=', 'image_services.id')
+        ->join('image_services', 'services.id', '=', 'image_services.service_id')
         ->select('services.*', 'image_services.imgdir')
         ->orderBy('id', 'asc')
         ->get();

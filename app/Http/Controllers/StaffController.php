@@ -10,6 +10,7 @@ use App\Models\Image_service;
 use App\Exports\YearlySalesExport;
 use Illuminate\Support\Facades\DB;
 use App\Events\PaymentStatusUpdated;
+use App\Models\image_rooms;
 use Intervention\Image\ImageManager;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -54,6 +55,7 @@ class StaffController extends Controller
         $data = DB::table('users')
         ->join('customer', 'users.id', '=', 'customer.id_users')
         ->join('booking', 'customer.id', '=', 'booking.id_customer')
+        ->orderBy('booking.created_at', 'desc')
         ->get();
 
         return view('staff.transaction')->with('data', $data);
@@ -119,7 +121,7 @@ class StaffController extends Controller
             'price' => 'required|integer',
             'details' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,webp',
-            'type' => 'required',
+            'type' => 'required|string|max:20',
             'service_duration' => 'required|integer',
         ]);
 
@@ -130,10 +132,10 @@ class StaffController extends Controller
             // insert data into users table
             $data = Service::create([
                 'service_name' => $request->service_name,
-                'price' => $request->price,
-                'details' => $request->details,
                 'type' => $request->type,
+                'price' => $request->price,
                 'service_duration' => $request->service_duration,
+                'details' => $request->details,
             ]);
             // insert data into staff table
             Image_service::create([
@@ -141,14 +143,13 @@ class StaffController extends Controller
                 'service_id' => $data->id,
             ]);
             $manager = new ImageManager(Driver::class);
-            $image = $manager->read($request->image)->scale(width:800);
-            $encode = $image->encode(new WebpEncoder(quality:100));
+            $image = $manager->read($request->image)->scale(width:1080);
+            $encode = $image->toWebp(100);
             $encode->save(storage_path('app/public/img/service/'.$img));
 
             // commit transaction
             DB::commit();
 
-            
         } catch (\Throwable $th) {
             // rollback transaction if error
             DB::rollBack();
@@ -188,8 +189,11 @@ class StaffController extends Controller
             'service_name' => 'string|max:255',
             'price' => 'integer',
             'details' => 'string',
+            'type' => 'string|max:20',
+            'service_duration' => 'integer',
             'image' => 'image|mimes:jpeg,png,jpg,webp',
         ]);
+
         
         if($request->has('image')) {
             try {
@@ -205,14 +209,16 @@ class StaffController extends Controller
                 
                 $service->update([
                     'service_name' => $request->service_name,
+                    'type' => $request->type,
+                    'service_duration' => $request->service_duration,
                     'price' => $request->price,
                     'details' => $request->details,
                 ]);
                 
                 $manager = new ImageManager(Driver::class);
                 $image = $manager->read($request->image);
-                $image->scale(width:800);
-                $encode = $image->encode(new WebpEncoder(quality:100));
+                $image->scale(width:1080);
+                $encode = $image->toWebp(100);
                 $encode->save(storage_path('app/public/img/service/'. $filename));
                 Storage::delete('/public/img/service/'. $old);
                 
@@ -267,18 +273,33 @@ class StaffController extends Controller
         $request->validate([
             'room_name' => 'required|string|max:255',
             'capacity' => 'required|integer',
-            'category' => 'required|string|max:255',
             'description'=> 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp',
         ]);
 
         try {
-            Room::create([
+            $img = str_replace(' ', '', strtolower($request->room_name)) . date('_Ymd_His') .'.webp';
+
+            DB::beginTransaction();
+            $data = Room::create([
                 'room_name' => $request->room_name,
                 'capacity' => $request->capacity,
-                'category' => $request->category,
-                'description' => $request->description
+                'category' => 'Max '.$request->capacity.' Pax',
+                'description' => $request->description,
             ]);
+
+            image_rooms::create([
+                'imgdir' => $img,
+                'id_room' => $data->id,
+            ]);
+            $manager = new ImageManager(Driver::class);
+            $image = $manager->read($request->image)->scale(width:1080);
+            $encode = $image->toWebp(100);
+            $encode->save(storage_path('app/public/img/room/'.$img));
+
+            DB::commit();
         } catch (\Throwable $th) {
+            DB::rollBack();
             $error = $th->getMessage();
             return redirect('/staff/room')->withErrors(['error'=> $error]);
         }
@@ -291,35 +312,89 @@ class StaffController extends Controller
         $request->validate([
             'room_name' => 'string|max:255',
             'capacity' => 'integer',
-            'category' => 'string|max:255',
             'description'=> 'string',
+            'image' => 'image|mimes:jpeg,png,jpg,webp',
         ]);
 
-        try {
-            $room->update([
-                'room_name' => $request->room_name,
-                'capacity' => $request->capacity,
-                'category' => $request->category,
-                'description' => $request->description
-            ]);
-        } catch (\Throwable $th) {
-            $error = $th->getMessage();
-            return redirect('/staff/room')->withErrors(['error'=> $error]);
+        if($request->has('image')) {
+            try {
+                DB::beginTransaction();
+                
+                $filename = str_replace(' ', '', strtolower($request->room_name)) . date('_Ymd_His'). '.webp' ;
+                $img = image_rooms::where('id_room', $id);
+                $old = $img->value('imgdir');
+                
+                $img->update([
+                    'imgdir' => $filename,
+                ]);
+
+                $room->update([
+                    'room_name' => $request->room_name,
+                    'capacity' => $request->capacity,
+                    'category' => 'Max '.$request->capacity.' Pax',
+                    'description' => $request->description
+                ]);
+                
+                $manager = new ImageManager(Driver::class);
+                $image = $manager->read($request->image);
+                $image->scale(width:1080);
+                $encode = $image->toWebp(100);
+                $encode->save(storage_path('app/public/img/room/'. $filename));
+                Storage::delete('/public/img/room/'. $old);
+                
+                DB::commit();
+                
+                return redirect('/staff/room')->with('success', 'Data change successfully');
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                Storage::delete('public/img/room/'. $filename);
+                $error = $th->getMessage();
+                return redirect('/staff/room')->withErrors(['error'=> $error]);
+            }
+
+        } else {
+            try {
+                DB::beginTransaction();
+
+                $room->update([
+                    'room_name' => $request->room_name,
+                    'capacity' => $request->capacity,
+                    'category' => $request->category,
+                    'description' => $request->description
+                ]);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                $error = $th->getMessage();
+                return redirect('/staff/room')->withErrors(['error'=> $error]);
+            }
+            return redirect('/staff/room')->with('success', 'successfully updated data.');
         }
-        return redirect('/staff/room')->with('success', 'Data change successfully');
     }
 
     public function deleteRoom($id)
     {
-        $room = Room::where('id', $id);
+        $image = image_rooms::where('service_id', $id);
+        $room = room::where('id', $id);
+        $filename = $image->value('imgdir');
+        
         try {
+            DB::beginTransaction();
+            $image->delete();
             $room->delete();
+            DB::commit();
+            Storage::delete('public/img/room/'. $filename);
         } catch (\Throwable $th) {
+            DB::rollBack();
             $error = $th->getMessage();
             return redirect('/staff/room')->withErrors(['error'=> $error]);
         }
-        return redirect('/staff/room')->with('success', 'Data deleted successfully');
+    
+        return redirect('/staff/room')->with('success', 'data deleted successfully');
     }
+
+    
 
     public function getReport(Request $request){
         // Mendapatkan tahun dari request, jika tidak ada default ke tahun ini

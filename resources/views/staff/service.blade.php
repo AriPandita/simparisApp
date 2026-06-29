@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/x-icon" href="/storage/img/favicon/cajuput.ico">
     <title>Welcome to The Cajuput Spa</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- font --}}
@@ -85,7 +86,7 @@
                             <div
                                 class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
                                 <div class="flex items-center w-full space-x-3 md:w-auto">
-                                    <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                                    {{-- <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
                                         class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                                         type="button">
                                         <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
@@ -110,7 +111,7 @@
                                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
                                                 all</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <button type="button" id="createModalButton" data-modal-target="createModal"
                                         data-modal-toggle="createModal"
                                         class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-green-600 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-green-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -278,8 +279,8 @@
                                         placeholder="Price">
                                 </div>
                                 <div>
-                                    <label for="TYPE" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                                    <select id="TYPE" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                                    <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option selected>Select Type</option>
                                         <option value="TREATMENT">TREATMENT</option>
                                         <option value="PACKAGE">PACKAGE</option>
@@ -290,7 +291,7 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Service Duration</label>
                                     <input type="number" name="service_duration" id="service_duration"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Service Duration">
+                                        placeholder="Minutes">
                                 </div>
                                 <div class="col-span-2">
                                     <label for="imgdir"
@@ -437,6 +438,21 @@
                                         <input type="number" name="price" id="price"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             value="{{ $item->price }}">
+                                    </div>
+                                    <div>
+                                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                                        <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option>Select Type</option>
+                                            <option {{$item->type == 'TREATMENT' ? 'selected' : ''}} value="TREATMENT">TREATMENT</option>
+                                            <option {{$item->type == 'PACKAGE' ? 'selected' : ''}} value="PACKAGE">PACKAGE</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="service_duration"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Service Duration</label>
+                                        <input type="number" name="service_duration" id="service_duration"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Minutes" value="{{ $item->service_duration }}">
                                     </div>
                                     <div class="col-span-2">
                                         <label for="imgdir"

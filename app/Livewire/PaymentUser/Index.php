@@ -100,7 +100,6 @@ class Index extends Component
         } catch (\Exception $e) {
             // rollback transaction
             DB::rollBack();
-            dd($e);
             // return error message with session
             session()->flash('error', $e->getMessage());
         }

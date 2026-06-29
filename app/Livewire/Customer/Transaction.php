@@ -110,6 +110,9 @@ class Transaction extends Component
             $this->rating = $feedback->rate;
             $this->feedbacktitle = $feedback->title;
             $this->feedbackmessage = $feedback->message;
+        } else {
+            $this->reset();
+            $this->dispatch('resetFeedback', 0);
         }
         $this->review = true;
     }
@@ -124,10 +127,7 @@ class Transaction extends Component
         ->join('rooms', 'rooms.id', '=', 'booking.id_room')
         ->select('booking.*', 'rooms.room_name')
         ->where('id_customer', $id)
-        ->get();
-
-        $feedback = DB::table('feedback')
-        ->whereIn('feedback.id_booking', $data->pluck('id'))
+        ->orderBy('booking.id', 'desc')
         ->get();
 
         $name = DB::table('order_services')
@@ -135,6 +135,7 @@ class Transaction extends Component
         ->select(DB::raw('GROUP_CONCAT(services.service_name ORDER BY services.service_name SEPARATOR ", ") as selected_service'))
         ->whereIn('order_services.id_booking', $data->pluck('id'))
         ->groupBy('order_services.id_booking')
+        ->orderBy('order_services.id_booking', 'desc')
         ->get();
         
         $image = DB::table('order_services')
@@ -144,11 +145,7 @@ class Transaction extends Component
         ->whereIn('order_services.id_booking', $data->pluck('id'))
         ->get();
 
-        if(empty($data)){
-
-        }
-
-        return view('livewire.customer.transaction', compact('data', 'image', 'feedback', 'name'));
+        return view('livewire.customer.transaction', compact('data', 'image', 'name'));
     }
 
 }

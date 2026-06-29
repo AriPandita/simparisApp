@@ -38,6 +38,9 @@
                     {{-- profile picture --}}
                     <div x-on:click="sidebar = !sidebar" 
                         class="hidden text-green-600 bg-green-200 border border-green-600 rounded-full cursor-pointer size-12 md:block">
+                        @if ($user)
+                        <img src="/storage/img/profilepic/{{$user}}" class="rounded-full">
+                        @else
                         <svg class="mx-auto text-green-600 size-10" xmlns="http://www.w3.org/2000/svg" width="47"
                             height="67" viewBox="0 0 47 67" fill="none">
                             <path
@@ -56,6 +59,7 @@
                                 d="M14.6743 14.123C9.32664 16.4918 2.05933 21.653 1.27074 26.7197C5.92812 24.4634 14.5338 23.3186 21.1314 20.4254C29.3082 16.8398 32.3821 14.1161 37.1005 11.2094C29.9544 8.88255 20.7656 11.4248 14.6743 14.123Z"
                                 fill="currentColor" />
                         </svg>
+                        @endif
                     </div>
                     {{-- profile notification --}}
                     @empty(auth()->user()->email_verified_at || session('message'))
@@ -88,7 +92,7 @@
                 <ul 
                     class="flex flex-col gap-3 p-4 mt-4 text-sm font-medium text-gray-700 list-inside border border-gray-100 rounded-lg md:text-gray-800 md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0">
                     <li>
-                        <a href="/" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Home</a>
+                        <a href="/" wire:navigate class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Home</a>
                     </li>
                     <li>
                         <a href="/#header" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">About</a>
@@ -232,7 +236,7 @@
                 </form>
                 @endempty
             </div>
-            <a href="logout"
+            <a href="/logout"
                 class="py-3 mx-4 mt-auto mb-3 text-xs tracking-widest text-center text-white bg-green-700 border-0 rounded-sm y-3 focus:outline-none hover:bg-green-800">
                 Sign Out
             </a>

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->string('type', 20)->default('SERVICE')->after('service_name');
+            $table->string('type', 20)->default('TREATMENT')->after('service_name');
         });
 
         Schema::dropIfExists('order_package');

@@ -45,8 +45,3 @@
         <span id="logo" class="font-serif text-sm text-gray-700 ">The Cajuput Spa</span>
     </div>
 </div>
-
-
-@push('scripts')
-<script src="{{asset('js/auth/auth_popup.js')}}"></script>
-@endpush

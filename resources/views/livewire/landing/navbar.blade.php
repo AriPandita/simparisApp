@@ -1,6 +1,6 @@
 <div x-data="{sidebar : false}">
     <nav id="nav-container"
-        class="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-200 select-none md:animate-fadeout dark:bg-gray-900">
+        class="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-200 select-none md:fixed md:animate-fadeout dark:bg-gray-900">
         <div class="flex flex-wrap items-center justify-between w-full max-w-screen-xl p-4 mx-auto">
             
             {{-- navbar logo --}}
@@ -38,6 +38,9 @@
                     {{-- profile picture --}}
                     <div x-on:click="sidebar = !sidebar" 
                         class="hidden text-green-600 bg-green-200 border border-green-600 rounded-full cursor-pointer size-12 md:block">
+                        @if ($user)
+                        <img src="/storage/img/profilepic/{{$user}}" class="rounded-full">
+                        @else
                         <svg class="mx-auto text-green-600 size-10" xmlns="http://www.w3.org/2000/svg" width="47"
                             height="67" viewBox="0 0 47 67" fill="none">
                             <path
@@ -56,6 +59,7 @@
                                 d="M14.6743 14.123C9.32664 16.4918 2.05933 21.653 1.27074 26.7197C5.92812 24.4634 14.5338 23.3186 21.1314 20.4254C29.3082 16.8398 32.3821 14.1161 37.1005 11.2094C29.9544 8.88255 20.7656 11.4248 14.6743 14.123Z"
                                 fill="currentColor" />
                         </svg>
+                        @endif
                     </div>
                     {{-- profile notification --}}
                     @empty(auth()->user()->email_verified_at || session('message'))
@@ -88,7 +92,7 @@
                 <ul id="nav-text"
                     class="flex flex-col gap-3 p-4 mt-4 text-sm font-medium list-inside border border-gray-100 rounded-lg md:animate-textfadein md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0">
                     <li>
-                        <a href="/#heroes" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Home</a>
+                        <a href="/" wire:navigate class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Home</a>
                     </li>
                     <li>
                         <a href="/#header" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">About</a>
@@ -97,7 +101,7 @@
                         <a href="/#service" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Services</a>
                     </li>
                     <li>
-                        <a href="/#footer" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Contact</a>
+                        <a href="#footer" class="py-2 pl-3 pr-4 md:hover:text-green-500 md:p-0">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -165,7 +169,7 @@
             {{-- sidebar menu list --}}
             <ul class="flex-1 h-auto my-2 text-sm text-gray-700 dark:text-gray-200 md:hidden">
                 <li> 
-                    <a href="/#heroes"
+                    <a href="/" wire:navigate x-on:click="sidebar = false"
                     class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"/>
@@ -174,7 +178,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/#header" 
+                    <a href="/#header" x-on:click="sidebar = false"
                         class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
@@ -184,7 +188,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/#service" 
+                    <a href="/#service" x-on:click="sidebar = false"
                         class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
                         <svg aria-hidden="true" 
                         class="flex-shrink-0 w-5 h-5 mr-1 text-gray-800"
@@ -193,7 +197,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/#footer" 
+                    <a href="#footer" x-on:click="sidebar = false"
                         class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
@@ -206,6 +210,8 @@
             @auth
             {{-- signout --}}
             <div class="pt-1 mb-4 text-sm text-gray-700 border-t">
+                @if(Auth::user()->level == 'customer')
+                
                 <a href="/profile" wire:navigate
                     class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -213,14 +219,24 @@
                     </svg>
                     Profile
                 </a>
-                <a href="{{Auth::user()->level == 'customer' ? '/transaction' : '/'.Auth::user()->level}}"
+                <a href="/transaction"
                     wire:navigate
                     class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
                     </svg>
-                    My Transaction
+                    Transaction
                 </a>
+                @else
+                <a href="{{'/'.Auth::user()->level}}"
+                    wire:navigate
+                    class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+                    </svg>
+                    Dashboard
+                </a>
+                @endif
                 @empty(auth()->user()->email_verified_at || session('message'))
                 <form action="/email/verification-notification" method="POST" class="">
                     @csrf
@@ -232,7 +248,7 @@
                 </form>
                 @endempty
             </div>
-            <a href="logout"
+            <a href="/logout"
                 class="py-3 mx-4 mt-auto mb-3 text-xs tracking-widest text-center text-white bg-green-700 border-0 rounded-sm y-3 focus:outline-none hover:bg-green-800">
                 Sign Out
             </a>

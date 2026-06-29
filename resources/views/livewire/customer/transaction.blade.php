@@ -145,12 +145,12 @@
                         {{-- transaction data --}}
                         <div class="flex w-full p-3 sm:gap-5 sm:flex-row">
                             <div class="self-center basis-1/3 max-w-64">
-                                <div class="grid grid-flow-row aspect-video" :class="$refs.image{{$i}}.children.length > 1 ? 'grid-cols-2':'grid-cols-1'" x-ref="image{{$i}}">
+                                <div class="grid grid-flow-row aspect-video " :class="$refs.image{{$i}}.children.length > 1 ? 'grid-cols-2':'grid-cols-1'" x-ref="image{{$i}}">
                                     @php 
                                     $limit = 0;
                                     foreach ($image as $service) {
                                         if ($service->id_booking == $booking->id && $limit < 4) {
-                                            echo "<img src='/storage/img/service/$service->imgdir' class='object-cover w-full h-full'>";
+                                            echo "<img src='/storage/img/service/$service->imgdir' class='object-cover w-full h-full aspect-video'>";
                                             $limit++;
                                         }
                                     }

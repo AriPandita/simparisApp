@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/x-icon" href="/storage/img/favicon/cajuput.ico">
     <title>Welcome to The Cajuput Spa</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- font --}}
@@ -229,23 +230,31 @@
                                 <div >
                                     <label for="capacity"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Capacity</label>
-                                    <input type="number" name="capacity" id="capacity"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="capacity">
+                                    <select id="capacity" name="capacity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option>Select Capacity</option>
+                                        <option value="1">Max 1 Person</option>
+                                        <option value="2">Max 2 Person</option>
+                                        <option value="3">Max 3 Person</option>
+                                    </select>
                                 </div>
                                 <div class="col-span-2">
-                                    <label for="category"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                    <input type="text" name="category" id="category"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="category">
+                                    <label for="imgdir"
+                                        class="block text-sm font-medium text-gray-900 dark:text-white">
+                                        Image
+                                    </label>
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Only
+                                        accept these image extension: PNG, JPG, JPEG and webp</p>
+                                    <input type="file" name="image" id="imgdir"
+                                        accept="image/png, image/jpeg, image/webp"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+
                                 </div>
                                 <div class="col-span-2 ">
                                     <label for="description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                     <textarea name="description" id="description" rows="5"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="description Service"></textarea>
+                                        placeholder="Description Service"></textarea>
                                 </div>
                                 <div>
                                     <button type="submit"
@@ -301,19 +310,27 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             value="{{ $item->room_name }}">
                                     </div>
-                                    <div>
+                                    <div >
                                         <label for="capacity"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Capacity</label>
-                                        <input type="number" name="capacity" id="capacity"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            value="{{ $item->capacity }}">
+                                        <select id="capacity" name="capacity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option>Select Capacity</option>
+                                            <option {{ $item->capacity == 1 ? 'selected' : ''}} value="1">Max 1 Pax</option>
+                                            <option {{ $item->capacity == 2 ? 'selected' : ''}} value="2">Max 2 Pax</option>
+                                            <option {{ $item->capacity == 3 ? 'selected' : ''}} value="3">Max 3 Pax</option>
+                                        </select>
                                     </div>
                                     <div class="col-span-2">
-                                        <label for="category"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                        <input type="text" name="category" id="category"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            value="{{ $item->category }}">
+                                        <label for="imgdir"
+                                            class="block text-sm font-medium text-gray-900 dark:text-white">
+                                            Image
+                                        </label>
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Only
+                                            accept these image extension: PNG, JPG, JPEG and webp</p>
+                                        <input type="file" name="image" id="imgdir"
+                                            accept="image/png, image/jpeg, image/webp"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+    
                                     </div>
                                     <div class="col-span-2 ">
                                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>

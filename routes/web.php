@@ -11,45 +11,11 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\DB;
 
 Route::get('/', App\Livewire\Landing\Index::class)->name('landing');
 Route::get('/service/{id}', App\Livewire\Detail\Service::class);
 Route::get('/room/{id}', App\Livewire\Detail\Room::class);
 Route::get('/payment', App\Livewire\PaymentUser\Index::class)->name('payment');
-
-Route::get('/testing', function(){
-    $data = DB::table('booking')
-        ->join('feedback', 'feedback.id_booking', '=', 'booking.id')
-        ->join('customer', 'customer.id', '=', 'booking.id_customer')
-        ->join('users', 'users.id', '=', 'customer.id_users')
-        ->join('rooms', 'rooms.id', '=', 'booking.id_room')
-        ->join('order_services', 'order_services.id_booking', '=', 'booking.id')
-        ->join('services', 'services.id', '=', 'order_services.id_services')
-        ->select('feedback.id', 'feedback.updated_at', 'feedback.rate', 'feedback.message', 'feedback.title', 'users.name', 'rooms.room_name', 'booking.id', DB::raw('GROUP_CONCAT(services.service_name ORDER BY services.service_name SEPARATOR ", ") as selected_services'))
-        ->groupBy('feedback.id', 'feedback.updated_at', 'feedback.rate', 'feedback.message', 'feedback.title', 'users.name', 'rooms.room_name', 'booking.id')
-        ->orderBy('feedback.id', 'desc')
-        ->get();
-    return $data;
-});
-
-Route::get('/testing', function(){
-    $data = DB::table('services')
-        ->join('image_services', 'services.id', '=', 'image_services.service_id')
-        ->select('services.*', 'image_services.imgdir')
-        ->get();
-
-        $rating = DB::table('feedback')
-        ->rightJoin('booking', 'feedback.id_booking', '=', 'booking.id')
-        ->rightJoin('order_services', 'order_services.id_booking', '=', 'booking.id')
-        ->rightJoin('services', 'services.id', '=', 'order_services.id_services')
-        ->join('image_services', 'services.id', '=', 'image_services.service_id')
-        ->select('services.service_name', 'image_services.imgdir', 'services.service_duration', 'services.price', 'services.type', 'services.details', 'order_services.id_services', DB::raw('ROUND(AVG(rate),1) as rating'))
-        ->groupBy('services.service_name', 'image_services.imgdir', 'services.service_duration', 'services.price', 'services.type', 'services.details', 'order_services.id_services')
-        ->get();
-
-        return (compact('rating'));
-});
 
 // autentikasi
 # ==================== SOCIALITE AUTH ================================
@@ -88,12 +54,11 @@ Route::middleware('auth')->group(function() {
 Route::middleware('guest')->group(function() {
 
     // ==================== AUTHENTICATION ====================
-    Route::get('/login', App\Livewire\Auth\Login::class);
+    Route::get('/login', App\Livewire\Auth\Login::class)->name('login');
     Route::get('/register', App\Livewire\Auth\Register::class);
-
-    // ==================== Reset & Forgor Password ====================
     Route::get('/forgot', App\Livewire\Auth\Forgot::class);
-
+    
+    // ==================== Reset & Forgor Password ====================
     Route::post('/forgot-password', function (Request $request) {
         $request->validate(['email' => 'required|email']);
     
@@ -105,37 +70,37 @@ Route::middleware('guest')->group(function() {
             ? back()->with(['status' => __($status)])
             : back()->withErrors(['email' => __($status)]);
     })->name('password.email');
-    
-    Route::get('/reset-password/{token}', function (string $token) {
-        return view('auth.reset-password', ['token' => $token]);
-    })->name('password.reset');
-    
-    Route::post('/reset-password', function (Request $request) {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-        ]);
-    
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-    
-                $user->save();
-    
-                event(new PasswordReset($user));
-            }
-        );
-    
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
-    })->name('password.update');
-
 });
+
+
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->name('password.reset');
+
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function (User $user, string $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+
+            $user->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
+})->name('password.update');
 
 Route::middleware(['auth', 'verified'])->group(function() 
 {

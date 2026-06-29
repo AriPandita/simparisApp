@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class image_rooms extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'service_name', 'details', 'price', 'packace_name', 'service_duration', 'type'
+        'imgdir', 'id_room', 
     ];
 }

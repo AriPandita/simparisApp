@@ -1,4 +1,4 @@
-@section('title', ' | The Cajuput Spa')
+@section('title', $params->room_name. ' | The Cajuput Spa')
 
 @section('head')
 {{-- font --}}
@@ -67,23 +67,22 @@
         </div>
     </section>
 
-    {{-- testimonial --}}
-    <section class="mt-10 py-14 bg-sky-100">
+    {{-- gallery --}}
+    <section class="py-10 bg-green-50">
         
-        {{-- gallery --}}
-        <h2 class="my-10 font-serif text-4xl text-center">{{$params->room_name}} Gallery</h2>
+        <h2 class="font-serif text-4xl text-center">{{$params->room_name}} Gallery</h2>
         <div class="grid max-w-screen-xl gap-1 p-1 mx-auto sm:grid-cols-2 md:grid-cols-4">
             <div class="aspect-square">
                 <img src="/storage/img/hero/hero.webp" class="object-cover w-full h-full rounded">
             </div>
             <div class="aspect-square">
+                <img src="/storage/img/hero/hero4.webp" class="object-cover w-full h-full rounded">
+            </div>
+            <div class="aspect-square">
                 <img src="/storage/img/hero/hero2.webp" class="object-cover w-full h-full rounded">
             </div>
             <div class="aspect-square">
-                <img src="/storage/img/service/bodytreatment_20240324_034859.webp" class="object-cover w-full h-full rounded">
-            </div>
-            <div class="aspect-square">
-                <img src="/storage/img/room/thecave_20240324_034831.webp" class="object-cover w-full h-full rounded">
+                <img src="/storage/img/hero/hero3.webp" class="object-cover w-full h-full rounded">
             </div>
         </div>
     </section>
